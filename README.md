@@ -1,5 +1,56 @@
-# Chicken-Disease-Classification
+# End-to-End Deep Learning Project: Chicken Disease Classification
 
+## 📝 Project Overview
+This project presents a comprehensive, end-to-end deep learning pipeline focused on chicken disease classification[cite: 1]. It utilizes images of chicken feathers to classify whether the chicken is healthy or affected by coccidiosis disease (coxy disease)[cite: 1]. The primary focus is on implementing best software engineering practices, including modular coding, MLOps integration, and cloud deployment[cite: 1].
+
+## 🛠️ Technologies & Tools
+* **Deep Learning Framework:** TensorFlow 2.x Keras API[cite: 1]
+* **Pre-trained Model:** VGG16 (Transfer Learning)[cite: 1]
+* **Web Framework:** Flask[cite: 1]
+* **Pipeline & Data Versioning:** DVC (Data Version Control)[cite: 1]
+* **CI/CD Automation:** GitHub Actions[cite: 1]
+* **Containerization:** Docker[cite: 1]
+* **Cloud Platforms:** AWS (EC2 & ECR) and Azure (ACR & Web App for Containers)[cite: 1]
+
+## 🏗️ Project Architecture & Workflow
+
+### 1. Data Ingestion & Setup
+* **Data Source:** Downloads a dataset of chicken feather images from GitHub[cite: 1].
+* **Structure:** Unzips and organizes images into labeled folders (`coxy disease` and `healthy`) stored under `artifacts/data_injection/`[cite: 1].
+* **Template Setup:** Utilizes an automated Python script (`template.py`) to create a modular, scalable project folder structure, including essential files for logging, utilities, and configurations[cite: 1].
+
+### 2. Model Training with Transfer Learning
+* **Base Model:** Downloads the pre-trained VGG16 model, freezes its layers, and adds custom dense layers for this specific classification task[cite: 1].
+* **Callbacks:** Implements TensorFlow callbacks for model checkpointing and TensorBoard logging to monitor training progress[cite: 1].
+* **Training:** Prepares training/validation data generators and trains the model using defined parameters, saving the output[cite: 1].
+* **Evaluation:** Evaluates the trained model on validation data, saving quantitative metrics (loss and accuracy) in a JSON format[cite: 1].
+
+### 3. MLOps Pipeline with DVC
+DVC is integrated to track pipeline stages, cache outputs, and skip re-running unchanged steps to save compute resources[cite: 1].
+
+| Stage Number | DVC Stage Name | Key Dependencies | Outputs |
+| :--- | :--- | :--- | :--- |
+| **01** | `data_injection` | `data_ingestion.py`, `config.yaml` | Downloaded & extracted dataset[cite: 1] |
+| **02** | `prepare_base_model` | `prepare_base_model.py`, `config.yaml`, `params.yaml` | Base and updated pre-trained models[cite: 1] |
+| **03** | `model_training` | Training scripts, base model, callbacks | Saved trained model[cite: 1] |
+| **04** | `model_evaluation` | Trained model, test data | Evaluation metrics JSON[cite: 1] |
+
+### 4. Application & UI
+* **Flask Web App:** A simple web interface allowing users to upload feather images[cite: 1].
+* **Features:** Users can trigger model retraining directly from the UI or get immediate disease classification predictions[cite: 1].
+
+## 🐳 Deployment Strategies
+The entire project is containerized using a `Dockerfile` specifying a Python 3.8 image, application dependencies, and AWS CLI tools[cite: 1]. 
+
+* **AWS Deployment:** Uses GitHub Actions to build and push the Docker image to AWS Elastic Container Registry (ECR)[cite: 1]. An EC2 instance configured with a GitHub self-hosted runner pulls and runs the container, exposing port `8080`[cite: 1].
+* **Azure Deployment:** Builds and pushes the image to Azure Container Registry (ACR), deploying it on Azure Web App for Containers[cite: 1]. Continuous deployment is triggered via GitHub Actions, exposing port `80`[cite: 1].
+
+## 📊 Project Metrics & Parameters
+* **Dataset Size:** ~200 images per class (coxy disease vs. healthy)[cite: 1]
+* **Image Size:** 224 x 224 x 3 (VGG16 input requirement)[cite: 1]
+* **Batch Size:** 16 (configured in `params.yaml`)[cite: 1]
+* **Epochs:** 1 (for demo purposes)[cite: 1]
+* **Docker Image Size:** ~2.5 GB[cite: 1]
 
 ## Workflows
 
