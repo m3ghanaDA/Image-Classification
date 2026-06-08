@@ -1,57 +1,358 @@
-# End-to-End Deep Learning Project: Chicken Disease Classification
+# 🐔 End-to-End Deep Learning Project: Chicken Disease Classification with MLOps
 
-## 📝 Project Overview
-This project presents a comprehensive, end-to-end deep learning pipeline focused on chicken disease classification. It utilizes images of chicken feathers to classify whether the chicken is healthy or affected by coccidiosis disease (coxy disease). The primary focus is on implementing best software engineering practices, including modular coding, MLOps integration, and cloud deployment.
+## 📌 Project Overview
 
-## 🛠️ Technologies & Tools
-* **Deep Learning Framework:** TensorFlow 2.x Keras API
-* **Pre-trained Model:** VGG16 (Transfer Learning)
-* **Web Framework:** Flask
-* **Pipeline & Data Versioning:** DVC (Data Version Control)
-* **CI/CD Automation:** GitHub Actions
-* **Containerization:** Docker
-* **Cloud Platforms:** AWS (EC2 & ECR) and Azure (ACR & Web App for Containers)
+This project is a production-ready Deep Learning application that classifies chicken diseases from feather images using Transfer Learning and MLOps best practices. The solution automates the complete machine learning lifecycle, from data ingestion and model training to deployment on cloud platforms such as AWS and Azure.
 
-## 🏗️ Project Architecture & Workflow
+The project leverages:
 
-### 1. Data Ingestion & Setup
-* **Data Source:** Downloads a dataset of chicken feather images from GitHub
-* **Structure:** Unzips and organizes images into labeled folders (`coxy disease` and `healthy`) stored under `artifacts/data_injection/`
-* **Template Setup:** Utilizes an automated Python script (`template.py`) to create a modular, scalable project folder structure, including essential files for logging, utilities, and configurations
+- TensorFlow & Keras
+- Transfer Learning (VGG16)
+- DVC (Data Version Control)
+- GitHub Actions (CI/CD)
+- Docker
+- Flask
+- AWS & Azure Cloud Services
 
-### 2. Model Training with Transfer Learning
-* **Base Model:** Downloads the pre-trained VGG16 model, freezes its layers, and adds custom dense layers for this specific classification task
-* **Callbacks:** Implements TensorFlow callbacks for model checkpointing and TensorBoard logging to monitor training progress
-* **Training:** Prepares training/validation data generators and trains the model using defined parameters, saving the output
-* **Evaluation:** Evaluates the trained model on validation data, saving quantitative metrics (loss and accuracy) in a JSON format
+---
 
-### 3. MLOps Pipeline with DVC
-DVC is integrated to track pipeline stages, cache outputs, and skip re-running unchanged steps to save compute resources
+## 🚀 Features
 
-| Stage Number | DVC Stage Name | Key Dependencies | Outputs |
-| :--- | :--- | :--- | :--- |
-| **01** | `data_injection` | `data_ingestion.py`, `config.yaml` | Downloaded & extracted dataset |
-| **02** | `prepare_base_model` | `prepare_base_model.py`, `config.yaml`, `params.yaml` | Base and updated pre-trained models |
-| **03** | `model_training` | Training scripts, base model, callbacks | Saved trained model |
-| **04** | `model_evaluation` | Trained model, test data | Evaluation metrics JSON |
+✅ End-to-End Deep Learning Pipeline
 
-### 4. Application & UI
-* **Flask Web App:** A simple web interface allowing users to upload feather images.
-* **Features:** Users can trigger model retraining directly from the UI or get immediate disease classification predictions.
+✅ Automated Data Ingestion
 
-## 🐳 Deployment Strategies
-The entire project is containerized using a `Dockerfile` specifying a Python 3.8 image, application dependencies, and AWS CLI tools. 
+✅ Transfer Learning with VGG16
 
-* **AWS Deployment:** Uses GitHub Actions to build and push the Docker image to AWS Elastic Container Registry (ECR). An EC2 instance configured with a GitHub self-hosted runner pulls and runs the container, exposing port `8080`.
-* **Azure Deployment:** Builds and pushes the image to Azure Container Registry (ACR), deploying it on Azure Web App for Containers. Continuous deployment is triggered via GitHub Actions, exposing port `80`.
+✅ Model Training & Evaluation
 
-## 📊 Project Metrics & Parameters
-* **Dataset Size:** ~200 images per class (coxy disease vs. healthy)
-* **Image Size:** 224 x 224 x 3 (VGG16 input requirement)
-* **Batch Size:** 16 (configured in `params.yaml`)
-* **Epochs:** 1 (for demo purposes)
-* **Docker Image Size:** ~2.5 GB
+✅ Flask Web Application
 
+✅ DVC Pipeline Tracking
 
+✅ GitHub Actions CI/CD
 
+✅ Docker Containerization
 
+✅ AWS Deployment (ECR + EC2)
+
+✅ Azure Deployment (ACR + Web App)
+
+---
+
+## 🏗️ Project Architecture
+
+```text
+├── config/
+├── artifacts/
+│   ├── data_ingestion/
+│   ├── prepare_base_model/
+│   ├── training/
+│   └── evaluation/
+├── logs/
+├── research/
+├── src/
+│   ├── components/
+│   ├── pipeline/
+│   ├── config/
+│   ├── entity/
+│   ├── utils/
+│   └── constants/
+├── templates/
+├── static/
+├── app.py
+├── main.py
+├── params.yaml
+├── config.yaml
+├── dvc.yaml
+├── Dockerfile
+├── requirements.txt
+└── .github/workflows/
+```
+
+---
+
+## 🔄 Workflow
+
+### 1. Data Ingestion
+- Download chicken feather image dataset
+- Extract and organize images
+- Store data in artifact directory
+
+### 2. Prepare Base Model
+- Load pre-trained VGG16 model
+- Freeze feature extraction layers
+- Add custom classification layers
+
+### 3. Prepare Callbacks
+- Model checkpoints
+- TensorBoard logging
+- Training monitoring
+
+### 4. Model Training
+- Data preprocessing
+- Data generators
+- Fine-tuning and training
+
+### 5. Model Evaluation
+- Evaluate trained model
+- Generate performance metrics
+- Store results in JSON format
+
+### 6. Prediction Pipeline
+- Load trained model
+- Preprocess user image
+- Generate disease prediction
+
+### 7. Web Application
+- Upload chicken feather images
+- Trigger predictions
+- Display classification results
+
+---
+
+## 🧠 Model Details
+
+| Parameter | Value |
+|------------|---------|
+| Model | VGG16 |
+| Input Size | 224 × 224 × 3 |
+| Framework | TensorFlow/Keras |
+| Batch Size | 16 |
+| Learning Method | Transfer Learning |
+| Task | Binary Image Classification |
+
+### Classes
+
+- Healthy
+- Coccidiosis Disease
+
+---
+
+## ⚙️ MLOps Implementation
+
+### DVC (Data Version Control)
+
+Used for:
+
+- Dataset versioning
+- Pipeline tracking
+- Experiment reproducibility
+- Dependency management
+
+Pipeline stages:
+
+```text
+data_ingestion
+prepare_base_model
+model_training
+model_evaluation
+```
+
+Run DVC pipeline:
+
+```bash
+dvc repro
+```
+
+Visualize pipeline:
+
+```bash
+dvc dag
+```
+
+---
+
+## 🔄 CI/CD with GitHub Actions
+
+Automated workflow:
+
+1. Push code to GitHub
+2. GitHub Actions triggered
+3. Build Docker image
+4. Run tests
+5. Deploy to cloud environment
+
+Workflow location:
+
+```text
+.github/workflows/main.yaml
+```
+
+---
+
+## 🐳 Docker Deployment
+
+Build Docker image:
+
+```bash
+docker build -t chicken-disease-classifier .
+```
+
+Run container:
+
+```bash
+docker run -p 8080:8080 chicken-disease-classifier
+```
+
+---
+
+## ☁️ AWS Deployment
+
+### Services Used
+
+- AWS Elastic Container Registry (ECR)
+- AWS EC2
+- GitHub Actions
+
+### Deployment Flow
+
+```text
+GitHub
+   ↓
+GitHub Actions
+   ↓
+Docker Build
+   ↓
+AWS ECR
+   ↓
+AWS EC2
+   ↓
+Application Running
+```
+
+---
+
+## ☁️ Azure Deployment
+
+### Services Used
+
+- Azure Container Registry (ACR)
+- Azure Web App for Containers
+
+### Deployment Flow
+
+```text
+GitHub
+   ↓
+GitHub Actions
+   ↓
+Docker Build
+   ↓
+Azure Container Registry
+   ↓
+Azure Web App
+```
+
+---
+
+## 🖥️ Web Application
+
+The Flask-based web interface allows users to:
+
+- Upload chicken feather images
+- Predict disease status
+- Trigger model retraining
+- View results instantly
+
+---
+
+## 📊 Technologies Used
+
+### Programming
+
+- Python
+
+### Deep Learning
+
+- TensorFlow
+- Keras
+
+### MLOps
+
+- DVC
+- GitHub Actions
+
+### Backend
+
+- Flask
+
+### Containerization
+
+- Docker
+
+### Cloud
+
+- AWS
+- Azure
+
+### Utilities
+
+- YAML
+- Logging
+- JSON
+- TensorBoard
+
+---
+
+## 📈 Future Improvements
+
+- Multi-class disease classification
+- Hyperparameter tuning
+- MLflow integration
+- Kubernetes deployment
+- Model monitoring and drift detection
+- Automated retraining pipelines
+
+---
+
+## 🎯 Learning Outcomes
+
+This project demonstrates:
+
+- Deep Learning Pipeline Development
+- Transfer Learning Implementation
+- Production-Grade MLOps Practices
+- CI/CD Automation
+- Docker Containerization
+- Cloud Deployment on AWS & Azure
+- Software Engineering Best Practices for ML Systems
+
+---
+
+## 📷 Sample Application Workflow
+
+```text
+User Uploads Image
+          ↓
+Image Preprocessing
+          ↓
+Trained VGG16 Model
+          ↓
+Prediction
+          ↓
+Result Displayed on Flask UI
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome.
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Open a Pull Request
+
+---
+
+## ⭐ Acknowledgements
+
+This project follows an industry-standard MLOps workflow inspired by modern machine learning deployment practices and demonstrates how to take a Deep Learning model from experimentation to production.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
